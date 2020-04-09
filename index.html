@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<?php include("ve_functions.php");?>
+<?php get_cache();?>
+
+<body>
+    <img src="visible_earth_image" class="background"
+         alt=<?php echo "$cache->title"?>>
+
+    <a href="<?php echo $cache->link ?>">
+    <div class="title">
+        <?php echo $cache->title;?>
+    </div>
+    </a>
+
+</body>
+</html>

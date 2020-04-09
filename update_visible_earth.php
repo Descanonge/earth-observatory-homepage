@@ -5,8 +5,7 @@
 
 <?php
 
-include("/home/clement/Documents/Websites/jzargo/welcome/find_background_ve.php");
-
+include("ve_functions.php");
 update();
 
 ?>

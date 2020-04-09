@@ -13,3 +13,5 @@ we have the latest image downloaded.
 Xml and curl libraries necessary.
 GD library necessary for putting image in landscape
 (this can be removed).
+
+You can clone this in any webroot subfolder and move index.html up a directory.

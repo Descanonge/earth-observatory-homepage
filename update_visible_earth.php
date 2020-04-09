@@ -5,7 +5,7 @@
 
 <?php
 
-include("ve_functions.php");
+include("/wherever this script is/ve_functions.php");
 update();
 
 ?>

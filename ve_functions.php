@@ -36,6 +36,7 @@ function download_image() {
     $front = $item->enclosure;
     $full = str_replace("_front.", "_lrg.", $front);
     $full = str_replace("_th.", "_lrg.", $full);
+    $full = str_replace(".png", ".jpg", $full);
 
     $ch = curl_init($full);
     $fp = fopen($image_path, 'wb');

@@ -34,7 +34,8 @@ function download_image() {
     $cache->appendChild($cx->createElement("link", $item->link));
 
     $front = $item->enclosure;
-    $full = str_replace("_front", "_lrg", $front);
+    $full = str_replace("_front.", "_lrg.", $front);
+    $full = str_replace("_th.", "_lrg.", $full);
 
     $ch = curl_init($full);
     $fp = fopen($image_path, 'wb');

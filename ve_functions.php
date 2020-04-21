@@ -3,6 +3,8 @@
 // Retrieve large image from visible earth
 // Place it in local folder along with xml file.
 
+include("simple_html_dom.php");
+
 function open_feed() {
     // Get VE RRS feed
     global $item;
@@ -23,6 +25,16 @@ function rotate_image($image_path) {
 }
 
 
+function find_large_image($url) {
+    $html = file_get_html($url);
+    foreach ($html->find('img[class*=img-fluid child"]') as $img) {
+        if (strpos($img->src, '_lrg.') !== false) {
+            return $img->src;
+        }
+    }
+    return null;
+}
+
 function download_image() {
     // Download image using curl
     // Save some information in xml file
@@ -33,12 +45,12 @@ function download_image() {
     $cache->appendChild($cx->createElement("title", $item->title));
     $cache->appendChild($cx->createElement("link", $item->link));
 
-    $front = $item->enclosure;
-    $full = str_replace("_front.", "_lrg.", $front);
-    $full = str_replace("_th.", "_lrg.", $full);
-    $full = str_replace(".png", ".jpg", $full);
+    $image_url = find_large_image($cache->link);
+    if ($image_url === null) {
+        $image_url = $item->enclosure;
+    }
 
-    $ch = curl_init($full);
+    $ch = curl_init($image_url);
     $fp = fopen($image_path, 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);

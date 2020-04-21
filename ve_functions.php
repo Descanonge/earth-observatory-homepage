@@ -45,7 +45,7 @@ function download_image() {
     $cache->appendChild($cx->createElement("title", $item->title));
     $cache->appendChild($cx->createElement("link", $item->link));
 
-    $image_url = find_large_image($cache->link);
+    $image_url = find_large_image($item->link);
     if ($image_url === null) {
         $image_url = $item->enclosure;
     }

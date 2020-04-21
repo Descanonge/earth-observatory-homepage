@@ -14,16 +14,23 @@ function open_feed() {
     $item = $x->channel[0]->item[0];
 }
 
-function rotate_image($image_path) {
+function rotate_image($image_path, $ext) {
     // Rotate image in landscape
     $size = getimagesize($image_path);
+    $ext = strtolower($ext);
     if ($size[1] > $size[0]) {
-        $image = imagecreatefromjpeg($image_path);
-        $image = imagerotate($image, 90, 0);
-        imagejpeg($image, $image_path);
+        if ($ext == "jpg" || $ext == "jpeg") {
+            $image = imagecreatefromjpeg($image_path);
+            $image = imagerotate($image, 90, 0);
+            imagejpeg($image, $image_path);
+        }
+        if ($ext == "png") {
+            $image = imagecreatefrompng($image_path);
+            $image = imagerotate($image, 90, 0);
+            imagepng($image, $image_path);
+        }
     }
 }
-
 
 function find_large_image($url) {
     $html = file_get_html($url);
@@ -59,7 +66,8 @@ function download_image() {
     fclose($fp);
 
     // rotate
-    rotate_image($image_path);
+    $ext = pathinfo($image_url, PATHINFO_EXTENSION);
+    rotate_image($image_path, $ext);
 
     $cx->appendChild($cache);
     $cx->save($cache_path);

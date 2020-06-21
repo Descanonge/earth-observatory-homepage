@@ -14,4 +14,4 @@ Curl libraries necessary, and `SimpleDOM <https://simplehtmldom.sourceforge.io/>
 GD library necessary for putting image in landscape
 (this can be removed).
 
-You can clone this in any webroot subfolder and move index.html up a directory.
+You can clone this in any webroot subfolder and move index.html and style.css up a directory.

@@ -10,7 +10,7 @@ information from the VisibleEarth rss feed.
 A script can be run at login and every few hours to check
 we have the latest image downloaded.
 
-Xml and curl libraries necessary.
+Curl libraries necessary, and `SimpleDOM <https://simplehtmldom.sourceforge.io/>`__.
 GD library necessary for putting image in landscape
 (this can be removed).
 

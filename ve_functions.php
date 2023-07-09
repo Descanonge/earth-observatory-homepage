@@ -8,10 +8,22 @@ include("simple_html_dom.php");
 function open_feed() {
     // Get VE RRS feed
     global $item;
-    $feed_url = "http://visibleearth.nasa.gov/feeds/all.rss";
-    $rss = file_get_contents($feed_url);
-    $x = new SimpleXmlElement($rss);
-    $item = $x->channel[0]->item[0];
+    $feed_url = "https://visibleearth.nasa.gov/feeds/all.rss";
+    echo "getting RSS feed...";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $feed_url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 180);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    $rss = curl_exec($ch);
+    if ($rss === false) {
+        echo "ERROR\n";
+    } else {
+        echo "OK\n";
+        $x = new SimpleXmlElement($rss);
+        $item = $x->channel[0]->item[0];
+    }
+    curl_close($ch);
 }
 
 function rotate_image($image_path, $ext) {
@@ -19,6 +31,7 @@ function rotate_image($image_path, $ext) {
     $size = getimagesize($image_path);
     $ext = strtolower($ext);
     if ($size[1] > $size[0]) {
+        echo "rotating image...";
         if ($ext == "jpg" || $ext == "jpeg") {
             $image = imagecreatefromjpeg($image_path);
             $image = imagerotate($image, 90, 0);
@@ -29,14 +42,27 @@ function rotate_image($image_path, $ext) {
             $image = imagerotate($image, 90, 0);
             imagepng($image, $image_path);
         }
+        echo "OK\n";
     }
 }
 
 function find_large_image($url) {
-    $html = file_get_html($url);
-    foreach ($html->find('img[class*=img-fluid child"]') as $img) {
-        if (strpos($img->src, '_lrg.') !== false) {
-            return $img->src;
+    echo "parsing webpage...";
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 180);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+    $html = curl_exec($ch);
+    if ($html === false) {
+        echo "ERROR\n";
+    } else {
+        echo "OK\n";
+        $x = str_get_html($html);
+        foreach ($x->find('img[class*=img-fluid child"]') as $img) {
+            if (strpos($img->src, '_lrg.') !== false) {
+                return $img->src;
+            }
         }
     }
     return null;
@@ -57,11 +83,18 @@ function download_image() {
         $image_url = $item->enclosure;
     }
 
+    echo "retrieving image...";
     $ch = curl_init($image_url);
     $fp = fopen($image_path, 'wb');
     curl_setopt($ch, CURLOPT_FILE, $fp);
     curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_exec($ch);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+    $res = curl_exec($ch);
+    if ($res) {
+        echo "OK\n";
+    } else {
+        echo "ERROR\n";
+    }
     curl_close($ch);
     fclose($fp);
 
@@ -69,6 +102,7 @@ function download_image() {
     $ext = pathinfo($image_url, PATHINFO_EXTENSION);
     rotate_image($image_path, $ext);
 
+    echo "caching\n";
     $cx->appendChild($cache);
     $cx->save($cache_path);
 }
@@ -94,13 +128,16 @@ function update() {
     // Update image if necessary
     // ie if nothing is cached or cache is outdated.
     global $cache_path, $cache, $item;
+    echo "checking cache\n";
     open_feed();
     if (file_exists($cache_path)) {
         $cache = _get_cache();
         if (strcmp($item->guid, $cache->guid) != 0) {
+            echo "cache not up to date\n";
             download_image();
         }
     } else {
+        echo "no cache\n";
         download_image();
     }
 }

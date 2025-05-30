@@ -1,0 +1,11 @@
+[Unit]
+Description=Visible Earth Homepage Server
+PartOf=visible-earth.service
+After=visible-earth.service
+
+[Service]
+ExecStart=python -m http.server -d /home/chaeck/Documents/Websites/VisibleEarthHomepage 8123
+Restart=on-failure
+
+[Install]
+WantedBy=visible-earth.service

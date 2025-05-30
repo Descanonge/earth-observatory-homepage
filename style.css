@@ -9,14 +9,21 @@ body {
     background-size: 100% 100%;
 }
 
-.title {
+.container {
     position: fixed;
     bottom: 2%;
     left: 50%;
     max-width: 100%;
     transform: translateX(-50%);
 
-    padding: 5px 15px;
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.ve-button {
+    display: block;
+    margin: 0 5px;
+    padding: 10px 15px;
     border-radius: 3px;
 
     opacity: .93;
@@ -24,6 +31,23 @@ body {
     text-align: center;
     vertical-align: bottom;
     white-space: normal;
+
+    color: white;
+    font-family: 'Noto Sans';
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.ve-button-hover:hover{
+    background-color: grey;
+}
+
+.ve-button-max {
+    cursor: default;
+    color: #8c8c8c;
+}
+
+.ve-title {
     text-overflow: ellipsis;
     color: white;
     font-family: 'Noto Sans';
@@ -34,4 +58,3 @@ body {
     position: absolute;
     width: 100%;
 }
-

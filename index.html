@@ -1,24 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>Home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-</head>
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Homepage</title>
+        <meta name="description" content="Homepage with latest VisibleEarth image">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<?php include("visible-earth-home/ve_functions.php");?>
-<?php get_cache();?>
+        <link rel="stylesheet" href="style.css">
+        <!-- Place favicon.ico in the root directory -->
 
-<body>
-    <img src="visible-earth-home/visible_earth_image" class="background"
-         alt=<?php echo "$cache->title"; ?>>
-
-    <a href="<?php echo "$cache->link"; ?>">
-    <div class="title">
-        <?php echo "$cache->title"; ?>
-    </div>
-    </a>
-
-</body>
+    </head>
+    <script src="js/main.js" defer></script>
+    <body>
+        <img id="ve-img" class="background" src="./images/latest">
+        <div class="container">
+            <div id="ve-prev" class="ve-button ve-button-hover" onclick="previous()">
+                <
+            </div>
+            <div id="ve-title" class="ve-button ve-button-hover" onclick="toArticle()">
+                title
+            </div>
+            <div id="ve-next" class="ve-button ve-button-hover" onclick="next()">
+                >
+            </div>
+        </div>
+    </body>
 </html>

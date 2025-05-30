@@ -1,0 +1,9 @@
+[Unit]
+Description=Visible Earth Refresh Timer
+Requires=visible-earth.service
+PartOf=visible-earth.service
+
+[Timer]
+Unit=visible-earth-scrap.service
+OnUnitInactiveSec=3h
+OnStartupSec=4s

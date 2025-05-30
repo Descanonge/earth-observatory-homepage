@@ -1,0 +1,14 @@
+[Unit]
+Description=Visible Earth Homepage
+After=network-online.target
+Wants=network-online.target
+After=multi-user.target
+
+# dummy program
+[Service]
+Type=oneshot
+ExecStart=/bin/true
+RemainAfterExit=yes
+
+[Install]
+WantedBy=network-online.target

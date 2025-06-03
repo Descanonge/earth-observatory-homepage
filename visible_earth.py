@@ -206,9 +206,10 @@ if __name__ == "__main__":
         if i == 0:
             link = path.join(db.images_dir, "latest")
             target = path.join(db.images_dir, it.img_file)
-            if os.readlink(link) != target:
+            if path.exists(target) and os.readlink(link) != target:
                 os.remove(link)
-                os.symlink(link, target)
+            if not path.exists(link):
+                os.symlink(target, link)
         db.to_json()
         db.download_image(it)
     db.remove_images()

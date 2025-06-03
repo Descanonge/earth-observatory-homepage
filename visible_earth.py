@@ -46,7 +46,7 @@ class Item:
             item.large_link = ""
             item.img_file = ""
             item.date = datetime.strptime(
-                tag.pubDate.string, "%a, %d %B %Y %H:%M:%S %z"
+                tag.pubDate.string, "%a, %d %b %Y %H:%M:%S %z"
             )
         except Exception as err:
             log.error("Malformed item tag:\n%s", item)

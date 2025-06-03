@@ -147,6 +147,7 @@ class Database:
 
     def update(self) -> None:
         """Update from the VE RSS feed."""
+        log.info("Obtain RSS feed")
         with urllib.request.urlopen(feed_url) as feed:
             dom = BeautifulSoup(feed.read(), features="xml")
 
@@ -159,10 +160,10 @@ class Database:
         items = items[: self.max_items]
 
         new_entries = {it.guid: it for it in items}
-        change = False
         for guid, item in new_entries.items():
             if guid not in self.entries:
                 self.entries[guid] = item
+                log.info("New entry (%s)", guid)
         to_remove = []
         for guid in self.entries:
             if guid not in new_entries:
@@ -175,7 +176,7 @@ class Database:
         img_file = path.join(self.images_dir, item.img_file)
         if path.isfile(img_file):
             return
-
+        log.info("Download image (%s)", item.large_link)
         urllib.request.urlretrieve(item.large_link, filename=img_file)
 
     def remove_images(self) -> None:
@@ -190,6 +191,7 @@ class Database:
             if ext == ".json":
                 continue
             if guid not in self.entries:
+                log.info("Removing old image (%s)", fullpath)
                 os.remove(fullpath)
 
 
@@ -209,6 +211,7 @@ if __name__ == "__main__":
             if path.exists(target) and os.readlink(link) != target:
                 os.remove(link)
             if not path.exists(link):
+                log.info("Symlink to latest image")
                 os.symlink(target, link)
         db.to_json()
         db.download_image(it)

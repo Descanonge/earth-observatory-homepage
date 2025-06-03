@@ -13,7 +13,9 @@ function update(item) {
 }
 
 
-fetch("../images/db.json")
+fetch("../images/db.json", {
+  headers: {"Cache-Control": "no-cache"}
+})
   .then((res) => res.json())
   .then((json) => json.entries)
   .then((entries_json) => {

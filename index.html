@@ -1,29 +1,21 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Homepage</title>
-        <meta name="description" content="Homepage with latest VisibleEarth image">
+        <title>Visible Earth Homepage</title>
+        <meta name="description" content="Visible Earth latest image">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <script src="js/jquery-3.7.1.min.js"></script>
         <link rel="stylesheet" href="style.css">
-        <!-- Place favicon.ico in the root directory -->
-
     </head>
-    <script src="js/main.js" defer></script>
     <body>
-        <img id="ve-img" class="background" src="./images/latest">
-        <div class="container">
-            <div id="ve-prev" class="ve-button ve-button-hover" onclick="previous()">
-                <
-            </div>
-            <div id="ve-title" class="ve-button ve-button-hover" onclick="toArticle()">
-                title
-            </div>
-            <div id="ve-next" class="ve-button ve-button-hover" onclick="next()">
-                >
-            </div>
+        <img id="ve-img" class="background">
+        <div class="ve-title ve-button ve-button-hover">
+            <p id="ve-title">
+            </p>
+            <p id="ve-subtitle" class="ve-subtitle">
+            </p>
         </div>
+        <script src="js/index.js"></script>
     </body>
 </html>

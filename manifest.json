@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "VisibleEarthHomepage",
-  "version": "1.0",
+  "name": "EarthObservatoryHomepage",
+  "version": "2.0",
   "description": "Change homepage to the latest image from NASA Earth Observatory",
   "chrome_settings_overrides": {
     "homepage": "index.html"

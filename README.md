@@ -2,6 +2,8 @@
 
 An extension setting the homepage to the latest image from http://visibleearth.nasa.gov.
 
+https://addons.mozilla.org/en-US/firefox/addon/visibleearthhomepage/
+
 The high-resolution image is displayed in full width.
 A small caption gives the title and links to the corresponding VisibleEarth webpage.
 

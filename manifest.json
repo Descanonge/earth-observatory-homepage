@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "VisibleEarthHomepage",
   "version": "1.0",
-  "description": "Change homepage to the latest image from NASA VisibleEarth",
+  "description": "Change homepage to the latest image from NASA Earth Observatory",
   "chrome_settings_overrides": {
     "homepage": "index.html"
   },
@@ -12,7 +12,8 @@
   },
   "permissions": [
     "webRequest",
-    "https://visibleearth.nasa.gov/*"
+    "storage",
+    "https://earthobservatory.nasa.gov/*"
   ],
   "browser_specific_settings": {
     "gecko": {

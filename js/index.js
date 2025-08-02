@@ -27,7 +27,10 @@ $.get({
       url: item.url,
       dataType: "html",
       success: function(res, status) {
-        var image_url = $(res).find(".panel-footer").find("a, .downloat-btn").attr("href");
+        var image_url = $(res).find(".panel-footer").find("a, .download-btn").attr("href");
+        if (typeof(image_url) === "undefined") {
+          image_url = $(res).find(".panel-image").find("img").attr("src");
+        }
         $(document).find("#ve-img").attr("src", image_url);
         item.image_url = image_url;
       }

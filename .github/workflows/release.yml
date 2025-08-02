@@ -15,11 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-tags: true
       - name: Create zip
-        run: zip -r earthobservatoryhomepage.zip js README.md index.html manifest.json LICENSE style.css
+
+        run: |
+          TAG="$(git describe --tags --abbrev=0)"
+          zip -r earthobservatoryhomepage-${TAG}.zip js README.md index.html manifest.json LICENSE style.css
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: earthobservatoryhomepage-submit
-          path: earthobservatoryhomepage.zip
+          name: earthobservatoryhomepage-${{ env.TAG }}
+          path: earthobservatoryhomepage-${{ env.TAG }}.zip

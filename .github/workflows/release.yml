@@ -1,0 +1,25 @@
+name: Build zip to submit addon
+
+on:
+  release:
+    types: [published]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create zip
+        run: zip -r earthobservatoryhomepage.zip js README.md index.html manifest.json LICENSE style.css
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: earthobservatoryhomepage-submit
+          path: earthobservatoryhomepage.zip

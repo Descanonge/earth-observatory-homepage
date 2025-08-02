@@ -18,11 +18,10 @@ jobs:
           fetch-tags: true
           fetch-depth: 300
           ref: ${{ github.ref }}
+      - name: Set env
+        run: echo "TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - name: Create zip
-
-        run: |
-          TAG="$(git describe --tags --abbrev=0)"
-          zip -r earthobservatoryhomepage-${TAG}.zip js README.md index.html manifest.json LICENSE style.css
+        run: zip -r earthobservatoryhomepage-${TAG}.zip js README.md index.html manifest.json LICENSE style.css
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:

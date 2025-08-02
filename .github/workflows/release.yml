@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-tags: true
+          fetch-depth: 300
           ref: ${{ github.ref }}
       - name: Create zip
 

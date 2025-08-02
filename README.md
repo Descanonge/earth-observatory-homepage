@@ -18,3 +18,9 @@ This is not affiliated with NASA.
 - webRequest
 - storage
 - access to `https://earthobservatory.nasa.gov/*`
+
+## Preview
+
+Result for the 30 July 2025:
+
+![example for 30 July 2025](./preview.jpg)

@@ -18,6 +18,7 @@ $.get({
       subtitle: $(item_rss).find("description").text(),
       url: $(item_rss).find("link").text()
     }
+    var thumbnail = $(item_rss).find("media\\:thumbnail").attr("url");
 
     $(document).find("#ve-title").html(item.title);
     $(document).find("#ve-subtitle").html(item.subtitle);
@@ -28,6 +29,9 @@ $.get({
       dataType: "html",
       success: function(res, status) {
         var image_url = $(res).find(".panel-footer").find("a, .download-btn").attr("href");
+        if (!(image_url.slice(-4).toLowerCase() in [".jpg", "png"])) {
+          image_url = thumbnail;
+        }
         if (typeof(image_url) === "undefined") {
           image_url = $(res).find(".panel-image").find("img").attr("src");
         }

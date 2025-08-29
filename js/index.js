@@ -45,10 +45,13 @@ $.get({
       url: item.url,
       dataType: "html",
       success: function(res, status) {
-        if (!(image_url.slice(-4).toLowerCase() in [".jpg", "png"])) {
         var image_url = $(res, ownerDocument).find(".panel-footer").find("a, .download-btn").attr("href");
+
+        // sometimes we obtain a video, in this case we use the thumbnail from rss
+        if (!/\.(jpg|jpeg|png|gif)$/i.exec(image_url)) {
           image_url = thumbnail;
         }
+        // sometimes there is no download button, we use the src of the panel image
         if (typeof(image_url) === "undefined") {
           image_url = $(res, ownerDocument).find(".panel-image").find("img").attr("src");
         }

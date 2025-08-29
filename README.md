@@ -6,6 +6,7 @@ https://addons.mozilla.org/en-US/firefox/addon/visibleearthhomepage/
 
 The high-resolution image is displayed in full width.
 A small caption gives the title and links to the corresponding article.
+Click to zoom-in, and click-drag to scroll around.
 
 The latest entry information is found with the RSS feed. The high-resolution image url is found by scraping the article page. This is saved to local storage to speed subsequent accesses as much as possible.
 

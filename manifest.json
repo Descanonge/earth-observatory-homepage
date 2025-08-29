@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "EarthObservatoryHomepage",
-  "version": "2.2",
+  "version": "2.3",
   "description": "Change homepage to the latest image from NASA Earth Observatory",
   "chrome_settings_overrides": {
     "homepage": "index.html"

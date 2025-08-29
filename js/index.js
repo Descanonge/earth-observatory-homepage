@@ -31,6 +31,11 @@ $.get({
     }
     var thumbnail = $(item_rss).find("media\\:thumbnail").attr("url");
 
+    // if href is already set, we keep things as they are from cache
+    if (document.getElementById("ve-link").href === item.url) {
+      return;
+    };
+
     document.getElementById("ve-title").textContent = item.title;
     document.getElementById("ve-subtitle").textContent = item.subtitle;
     document.getElementById("ve-link").href = item.url;

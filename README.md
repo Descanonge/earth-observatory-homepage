@@ -2,9 +2,6 @@
 
 An extension setting the homepage to the latest image from https://earthobservatory.nasa.gov.
 
-> [!WARNING]
-> Due to the current gouvernement shutdown NASA is not updating the Earth Observatory image of the day. The extension now shows a black screen :( It should come back once this is resolved.
-
 https://addons.mozilla.org/en-US/firefox/addon/visibleearthhomepage/
 
 The high-resolution image is displayed in full width.

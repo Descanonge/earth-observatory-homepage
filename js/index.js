@@ -1,4 +1,11 @@
 
+
+function toBytes (size) {
+  var units = ["B", "KB", "MB"];
+  var [num, unit] = size.split(" ");
+  return parseFloat(num) * 1024 ** units.indexOf(unit);
+}
+
 // Use cache to speed things up
 browser.storage.local.get(["title", "subtitle", "url", "image_url", "max_width"])
        .then((item) => {
@@ -18,26 +25,25 @@ img.onload = function() {
 }
 
 $.get({
-  url: "https://earthobservatory.nasa.gov/feeds/image-of-the-day.rss",
-  dataType: "xml",
+  url: "https://science.nasa.gov/earth/earth-observatory/",
+  dataType: "html",
   success: function(res, status) {
     // Need a virtual document to avoid loading images
     var ownerDocument = document.implementation.createHTMLDocument('virtual');
-    var item_rss = $(res, ownerDocument).find("item").first();
-    var item = {
-      title: $(item_rss).find("title").text(),
-      subtitle: $(item_rss).find("description").text(),
-      url: $(item_rss).find("link").text()
-    }
-    var thumbnail = $(item_rss).find("media\\:thumbnail").attr("url");
 
-    // if href is already set, we keep things as they are from cache
-    if (document.getElementById("ve-link").href === item.url) {
-      return;
-    };
+    var item_dom = $(res, ownerDocument).find("div.hds-content-item").first();
+    var item  = {
+      title: $(item_dom).find("a.hds-content-item-heading").find("div").text().trim(),
+      url: $(item_dom).find("a").attr("href")
+    }
+    thumbnail = $(item_dom).find("img").attr("src").split("?")[0];
+
+    // // if href is already set, we keep things as they are from cache
+    // if (document.getElementById("ve-link").href === item.url) {
+    //   return;
+    // };
 
     document.getElementById("ve-title").textContent = item.title;
-    document.getElementById("ve-subtitle").textContent = item.subtitle;
     document.getElementById("ve-link").href = item.url;
     browser.storage.local.set(item);
 
@@ -45,19 +51,41 @@ $.get({
       url: item.url,
       dataType: "html",
       success: function(res, status) {
-        var image_url = $(res, ownerDocument).find(".panel-footer").find("a, .download-btn").attr("href");
+        var subtitle = $(res, ownerDocument).find("div.excerpt").find("p").text().trim();
 
-        // sometimes we obtain a video, in this case we use the thumbnail from rss
-        if (!/\.(jpg|jpeg|png|gif)$/i.exec(image_url)) {
+        var image_url;
+        var downloads = $(res, ownerDocument).find("div.hds-featured-file-list");
+        // take the largest image using the listed size
+        var max_size = 0;
+        $(downloads).find("div.hds-file-list-row").each(function(index) {
+          var specs = $(this).find("div.hds-file-list-filetype").find("p").text().trim();
+          var [filetype, size] = /([^ ]*) \((.*)\)/.exec(specs).slice(1);
+
+          if (!/(jpg|jpeg|png|gif)$/i.exec(filetype)) {
+            return;
+          }
+
+          var size = toBytes(size);
+          if (size > max_size) {
+            max_size = size;
+            image_url = $(this).find("div.hds-file-list-download").find("a").attr("href");
+          }
+        });
+        console.log(image_url);
+
+        // sometimes there is no download button, we try the first media
+        if (typeof(image_url) === "undefined") {
+          image_url = $(res, ownerDocument).find("div.hds-media").first().find("img").attr("src");
+        }
+
+        // sometimes the media is a video, use the thumbnail
+        if (typeof(image_url) === "undefined") {
           image_url = thumbnail;
         }
-        // sometimes there is no download button, we use the src of the panel image
-        if (typeof(image_url) === "undefined") {
-          image_url = $(res, ownerDocument).find(".panel-image").find("img").attr("src");
-        }
 
+        document.getElementById("ve-subtitle").textContent = subtitle;
         document.getElementById("ve-img").src = image_url
-        browser.storage.local.set({"image_url": image_url});
+        browser.storage.local.set({"image_url": image_url, "subtitle": subtitle});
       }
     });
 

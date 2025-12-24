@@ -29,7 +29,7 @@ html {
     white-space: normal;
 
     color: white;
-    font-family: 'Noto Sans';
+    font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
     font-size: 30px;
     cursor: pointer;
 }

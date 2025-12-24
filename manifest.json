@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "EarthObservatoryHomepage",
-  "version": "2.3",
+  "version": "2.4",
   "description": "Change homepage to the latest image from NASA Earth Observatory",
   "chrome_settings_overrides": {
     "homepage": "index.html"
@@ -13,7 +13,7 @@
   "permissions": [
     "webRequest",
     "storage",
-    "https://earthobservatory.nasa.gov/*"
+    "https://science.nasa.gov/*"
   ],
   "browser_specific_settings": {
     "gecko": {

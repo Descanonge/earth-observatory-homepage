@@ -38,10 +38,10 @@ $.get({
     }
     thumbnail = $(item_dom).find("img").attr("src").split("?")[0];
 
-    // // if href is already set, we keep things as they are from cache
-    // if (document.getElementById("ve-link").href === item.url) {
-    //   return;
-    // };
+    // if href is already set, we keep things as they are from cache
+    if (document.getElementById("ve-link").href === item.url) {
+      return;
+    };
 
     document.getElementById("ve-title").textContent = item.title;
     document.getElementById("ve-link").href = item.url;
